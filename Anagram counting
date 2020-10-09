@@ -1,0 +1,86 @@
+using System;
+using System.Collections.Generic;
+using System.Numerics;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        List<string> words = new List<string>();
+        while (true)
+        {
+            string input = Console.ReadLine();
+            if (!string.IsNullOrEmpty(input))
+            {
+                words.Add(input);
+            }
+            else if (string.IsNullOrEmpty(input))
+            {
+                break;
+            }
+        }
+        BigInteger w = 1;
+        foreach (var word in words)
+        {
+            List<Char> listOfChars = new List<Char>();
+            List<char> l = new List<char>();
+            foreach (var c in word)
+            {
+                bool charExists = false;
+                for (int i = 0; i < l.Count; i++)
+                {
+                    if (c.Equals(l[i]))
+                    {
+                        charExists = true;
+                    }
+                }
+                if (!charExists)
+                {
+                    Char newChar = new Char();
+                    newChar.Character = c;
+                    newChar.Count = 1;
+                    l.Add(c);
+                    listOfChars.Add(newChar);
+                } else
+                {
+                    //Char exists already, still add it to the word but increase count for that char
+                    l.Add(c);
+                    foreach (var chaar in listOfChars)
+                    {
+                        if (chaar.Character.Equals(c))
+                        {
+                            chaar.Count++;
+                        }
+                    }
+                }
+            }
+            string newWord = new string(l.ToArray());
+            for (BigInteger y = newWord.Length; y > 0; y--)
+            {
+                w += w * (y - 1);
+            }
+            BigInteger divider = 1;
+            foreach (var chaar in listOfChars)
+            {
+                BigInteger permutation = 1;
+                if (chaar.Count > 1)
+                {
+                    for (int charCount = chaar.Count; charCount > 1; charCount--)
+                    {
+                        permutation *= charCount;
+                    }
+                    divider *= permutation;
+                }
+            }
+            w = w / divider;
+            Console.WriteLine(w);
+            w = 1;
+        }
+    }
+
+    public class Char
+    {
+        public char Character { get; set; }
+        public int Count { get; set; }
+    }
+}
