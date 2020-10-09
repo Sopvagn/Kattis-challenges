@@ -1,0 +1,39 @@
+using System;
+public class ProblemB
+{
+    public static void Main()
+    {
+        bool possible = true;
+        int atm = 0;
+        int enter = 0;
+        int left = 0;
+        int waiting = 0;
+        var input = Console.ReadLine().Split();
+        int cap = Int32.Parse(input[0].ToString());
+        int stops = Int32.Parse(input[1].ToString());
+        for(int i = 0; i < stops; i++){
+            var input2 = Console.ReadLine().Split();
+            enter = Int32.Parse(input2[1].ToString());
+            left = Int32.Parse(input2[0].ToString());
+            waiting = Int32.Parse(input2[2].ToString());
+            if(left > atm){
+                possible = false;
+                break;
+            }
+            atm += enter - left;
+            if((atm > cap) || (atm != cap && waiting > 0) || (atm < 0) || (i == stops -1 && waiting > 0)){
+                possible = false;
+                break;
+            }
+        }
+        if(atm != 0){
+            possible = false;
+        }
+        if (possible){
+            Console.WriteLine("possible");
+        }
+        else{
+            Console.WriteLine("impossible");
+        }
+    }
+}
