@@ -1,0 +1,22 @@
+using System;
+
+public class ProblemA
+{
+    public static void Main()
+    {
+        string x = Console.ReadLine();
+        int w = 0;
+        
+        for(int i = 0; i < x.Length ; i += 3) { 
+            if (x[i] != 'P')
+                w++;
+                
+            if (x[i + 1] != 'E')
+                w++;
+                
+            if (x[i + 2] != 'R')
+                w++;
+        }
+        Console.WriteLine(w);
+    }
+}
